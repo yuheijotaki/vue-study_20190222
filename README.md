@@ -2,4 +2,4 @@
 
 ## やること
 
-- [ポートフォリオページ](https://works.yuheijotaki.com) のコンテンツのエンドポイントを WP REST API を用いて作成
+- 前回のファイルを引き継いで Vue Router を使用して新しいページ（ `/about/` ）を作成する。

@@ -1,29 +1,20 @@
 <template>
   <div id="app">
     <header>
-      <h1>works.yuheijotaki.com</h1>
+      <h1><router-link to="/">works.yuheijotaki.com</router-link></h1>
       <nav>
         <ul>
           <li v-for="(category,index) in categories" :key="index">
             <a href="javascript:void(0);" @click="filterCategory" :data-category="category.name" :class="['naviLink' , { 'is-selected': category.selected }]">{{category.name}}</a>
           </li>
+          <li>
+            <router-link to="/about">About</router-link>
+          </li>
         </ul>
       </nav>
     </header>
     <main>
-      <ul>
-        <li v-for="(post,index) in posts" :key="index" v-show="post.customData.display">
-          <a :href="post.acf.post_url" target="_blank">
-            <figure><img :src="post.images.full" :alt="post.title.rendered"></figure>
-            <div class="wrap" :style="{ color: post.acf.post_color_letter, background: post.acf.post_color_bg }">
-              <div class="inner">
-                <h2>{{post.title.rendered}}</h2>
-                <p>{{post.category_name}}</p>
-              </div>
-            </div>
-          </a>
-        </li>
-      </ul>
+      <router-view></router-view>
     </main>
   </div>
 </template>
@@ -31,11 +22,9 @@
 <script>
 // normalize.css を読み込む
 import "normalize.css";
-// Ajax通信ライブラリ
-import axios from "axios";
 
 export default {
-  name: "App",
+  name: 'App',
   data() {
     return {
       categories: [
@@ -59,24 +48,13 @@ export default {
           name: 'Tumblr',
           selected: false
         }
-      ],
-      posts: []
+      ]
     }
   },
-  created: function(){
-    this.request();
-  },
+  props: [
+    'posts'
+  ],
   methods: {
-    request: function(){
-      axios.get( 'https://works.yuheijotaki.com/wp-json/wp/v2/posts?per_page=100' )
-      .then( response => {
-        this.posts = response.data;
-        // console.log(this.posts);
-      })
-      .catch( error => {
-        console.log(error);
-      });
-    },
     filterCategory: function(event) { // カテゴリーがクリックされたとき用のメソッド
       // 全体のナビゲーションのクラス削除
       var targetElements = document.getElementsByClassName('naviLink');
@@ -86,7 +64,8 @@ export default {
       // 選択したナビゲーションのクラス付与
       event.currentTarget.classList.add('is-selected');
       // 投稿の取得
-      const posts = this.posts;
+      const posts = this.posts; // この `this.posts` を top.vue からもってくる
+      console.log(posts);
       const selectedCategory = event.currentTarget.getAttribute('data-category'); // クリックしたカテゴリーの取得
       if ( selectedCategory !== 'All' ) {
         // `All` 以外を選択した場合
@@ -110,13 +89,17 @@ export default {
       }
     }
   }
-};
+}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 html,* {
   margin: 0;
-  padding: 0
+  padding: 0;
+}
+h1,h2,h3,h4,h5,h6 {
+  margin: 0;
+  padding: 0;
 }
 #app {
   font-family: Helvetica Neue, Helvetica, Arial, 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
@@ -135,6 +118,10 @@ html,* {
       color: #222;
       font-size: 20px;
       line-height: 1.2;
+      a {
+        color: #222;
+        text-decoration: none;
+      }
     }
     nav {
       margin-left: auto;
@@ -161,60 +148,6 @@ html,* {
   }
   main {
     margin-top: 40px;
-    ul {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      li {
-        width: 25%;
-        a {
-          display: block;
-          text-decoration: none;
-          position: relative;
-          figure {
-            font-size: 0;
-            line-height: 0;
-            img {
-              width: 100%;
-              height: auto;
-            }
-          }
-          .wrap {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            .inner {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              width: 100%;
-              padding: 0 10px;
-              box-sizing: border-box;
-              text-align: center;
-              letter-spacing: 0.025em;
-              h2 {
-                font-size: 13px;
-                line-height: 1.2;
-              }
-              p {
-                margin-top: .2em;
-                font-size: 10px;
-                line-height: 1.4;
-              }
-            }
-          }
-          &:hover {
-            .wrap {
-              display: block;
-            }
-          }
-        }
-      }
-    }
   }
 }
 </style>
