@@ -4,9 +4,7 @@
       <h1><router-link to="/">works.yuheijotaki.com</router-link></h1>
       <nav>
         <ul>
-          <li v-for="(category,index) in categories" :key="index">
-            <a href="javascript:void(0);" @click="filterCategory" :data-category="category.name" :class="['naviLink' , { 'is-selected': category.selected }]">{{category.name}}</a>
-          </li>
+          <Navigation @event-one="onEventOne"></Navigation>
           <li>
             <router-link to="/about">About</router-link>
           </li>
@@ -22,71 +20,16 @@
 <script>
 // normalize.css を読み込む
 import "normalize.css";
+import Navigation from './components/navi.vue';
 
 export default {
   name: 'App',
-  data() {
-    return {
-      categories: [
-        {
-          name: 'All',
-          selected: true
-        },
-        {
-          name: 'Front-end',
-          selected: false
-        },
-        {
-          name: 'WordPress',
-          selected: false
-        },
-        {
-          name: 'Web Design',
-          selected: false
-        },
-        {
-          name: 'Tumblr',
-          selected: false
-        }
-      ]
-    }
+  components: {
+    Navigation
   },
-  props: [
-    'posts'
-  ],
   methods: {
-    filterCategory: function(event) { // カテゴリーがクリックされたとき用のメソッド
-      // 全体のナビゲーションのクラス削除
-      var targetElements = document.getElementsByClassName('naviLink');
-      [].forEach.call(targetElements, function(elem) {
-        elem.classList.remove('is-selected');
-      });
-      // 選択したナビゲーションのクラス付与
-      event.currentTarget.classList.add('is-selected');
-      // 投稿の取得
-      const posts = this.posts; // この `this.posts` を top.vue からもってくる
-      console.log(posts);
-      const selectedCategory = event.currentTarget.getAttribute('data-category'); // クリックしたカテゴリーの取得
-      if ( selectedCategory !== 'All' ) {
-        // `All` 以外を選択した場合
-        for (var i = 0; i < posts.length; i++) { // 投稿ごとのループ
-          const categories = posts[i].category_name; // 投稿のカテゴリーを取得
-          const categoriesArray = categories.split(' ,'); // 取得したカテゴリーを配列に変換
-          for (var j = 0; j < categoriesArray.length; j++) { // 投稿内のカテゴリーごとのループ
-            if ( categoriesArray.indexOf(selectedCategory) >= 0 ) { // 投稿に属するカテゴリーが含まれる場合
-              posts[i].customData.display = true;
-              break;
-            } else { // マッチしない場合
-              posts[i].customData.display = false;
-            }
-          }
-        }
-      } else {
-        // `All` を選択した場合
-        for (var i = 0; i < posts.length; i++) { // 投稿ごとのループ
-          posts[i].customData.display = true; // すべての投稿の `display` を `true` に
-        }
-      }
+    onEventOne () {
+      alert('event01');
     }
   }
 }

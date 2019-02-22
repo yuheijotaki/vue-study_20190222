@@ -9,8 +9,7 @@ export default new Router({
     {
       path: "/",
       name: 'top',
-      component: top,
-      props: true // ←コレが大事
+      component: top
     },
     {
       path: "/about",

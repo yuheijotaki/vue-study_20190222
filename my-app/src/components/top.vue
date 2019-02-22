@@ -27,9 +27,6 @@ export default {
   created: function(){
     this.request();
   },
-  // props: [
-  //   'filterCategory'
-  // ],
   methods: {
     request: function(){
       axios.get( 'https://works.yuheijotaki.com/wp-json/wp/v2/posts?per_page=100' )
