@@ -17,6 +17,7 @@
 <script>
 // Ajax通信ライブラリ
 import axios from "axios";
+
 export default {
   name: 'top',
   data () {
@@ -27,11 +28,13 @@ export default {
   created: function(){
     this.request();
   },
+  props: ['posts'],
   methods: {
     request: function(){
       axios.get( 'https://works.yuheijotaki.com/wp-json/wp/v2/posts?per_page=100' )
       .then( response => {
         this.posts = response.data;
+        // this.$emit(this.posts)
       })
       .catch( error => {
         console.log(error);
