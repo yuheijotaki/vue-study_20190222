@@ -18,4 +18,7 @@
 - [3連休だしVue\.jsをはじめよう：コンポーネントを使ってみる \- 豆腐とコンソメ](https://www.tohuandkonsome.site/entry/2017/10/09/004525)
 
 - [vue\.js でコンポーネント間でデータ受け渡しとイベント発行周り \- Qiita](https://qiita.com/sasarkyz/items/347bcedec8e20d4fdd76)
+- [【Vue\.jsでSPAへの移行】コンポーネントを使ってみよう \| orizuru](https://orizuru.io/blog/vue-js/component/)
+
+
 
