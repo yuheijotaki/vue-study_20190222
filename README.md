@@ -12,18 +12,18 @@
 .
 ├── index.js
 ├── App.vue
-├── router
+├── /router/
 |   └── index.js
-├── components
-|   └── page
-|				├── top.vue
-|				└── about.vue
-|   └── common
-|				├── myHeader.vue
-|				└── myFooter.vue
-|   └── element
-|				└── button
-|						└── myButton.vue
+└── /components/
+    └── /page/
+    |   ├── top.vue
+    |   └── about.vue
+    └── /common/ 
+    |   ├── myHeader.vue
+    |   └── myFooter.vue
+    └── /element/
+        └── /button/
+            └── myButton.vue
 ```
 
 #### `index.js`
